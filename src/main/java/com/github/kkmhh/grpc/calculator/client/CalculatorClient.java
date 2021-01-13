@@ -1,8 +1,6 @@
 package com.github.kkmhh.grpc.calculator.client;
 
-import com.proto.calculator.SumRequest;
-import com.proto.calculator.SumResponse;
-import com.proto.calculator.SumServiceGrpc;
+import com.proto.calculator.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -15,15 +13,24 @@ public class CalculatorClient {
                 .usePlaintext()
                 .build();
 
-        SumServiceGrpc.SumServiceBlockingStub sumClient = SumServiceGrpc.newBlockingStub(channel);
+        CalculatorServiceGrpc.CalculatorServiceBlockingStub calculatorClient = CalculatorServiceGrpc.newBlockingStub(channel);
 
-        SumRequest sumRequest = SumRequest.newBuilder()
-                .setFirstNumber(10)
-                .setLastNumber(20)
+        // Unary start
+//        SumRequest sumRequest = SumRequest.newBuilder()
+//                .setFirstNumber(10)
+//                .setLastNumber(20)
+//                .build();
+//
+//        SumResponse sumResponse = sumClient.summation(sumRequest);
+//        System.out.printf("%d + %d = %d%n", sumRequest.getFirstNumber(), sumRequest.getLastNumber(), sumResponse.getResult());
+        // Unary end
+
+        PrimeManyTimesRequest primeManyTimesRequest = PrimeManyTimesRequest.newBuilder()
+                .setNumber(120)
                 .build();
 
-        SumResponse sumResponse = sumClient.summation(sumRequest);
-        System.out.printf("%d + %d = %d%n", sumRequest.getFirstNumber(), sumRequest.getLastNumber(), sumResponse.getResult());
+        calculatorClient.primeManyTimes(primeManyTimesRequest)
+                .forEachRemaining(primeManyTimesResponse -> System.out.println(primeManyTimesResponse.getNumber()));
 
         channel.shutdown();
     }
