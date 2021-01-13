@@ -1,4 +1,4 @@
-package com.github.kkmhh.grpc.greeting.server;
+package com.github.kkmhh.grpc.calculator.server;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;

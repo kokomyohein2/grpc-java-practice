@@ -1,13 +1,8 @@
-package com.github.kkmhh.grpc.greeting.client;
+package com.github.kkmhh.grpc.calculator.client;
 
-import com.proto.calculator.Sum;
 import com.proto.calculator.SumRequest;
 import com.proto.calculator.SumResponse;
 import com.proto.calculator.SumServiceGrpc;
-import com.proto.greet.GreetRequest;
-import com.proto.greet.GreetResponse;
-import com.proto.greet.GreetServiceGrpc;
-import com.proto.greet.Greeting;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -22,18 +17,14 @@ public class CalculatorClient {
 
         SumServiceGrpc.SumServiceBlockingStub sumClient = SumServiceGrpc.newBlockingStub(channel);
 
-        Sum sum = Sum.newBuilder()
-                .setFirstNum(44)
-                .setLastNum(30)
-                .build();
-
         SumRequest sumRequest = SumRequest.newBuilder()
-                .setSum(sum)
+                .setFirstNumber(10)
+                .setLastNumber(20)
                 .build();
 
         SumResponse sumResponse = sumClient.summation(sumRequest);
-        System.out.println("res : " + sumResponse.getResult());
-        
+        System.out.printf("%d + %d = %d%n", sumRequest.getFirstNumber(), sumRequest.getLastNumber(), sumResponse.getResult());
+
         channel.shutdown();
     }
 }

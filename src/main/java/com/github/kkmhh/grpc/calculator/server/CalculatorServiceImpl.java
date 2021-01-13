@@ -1,6 +1,5 @@
-package com.github.kkmhh.grpc.greeting.server;
+package com.github.kkmhh.grpc.calculator.server;
 
-import com.proto.calculator.Sum;
 import com.proto.calculator.SumRequest;
 import com.proto.calculator.SumResponse;
 import com.proto.calculator.SumServiceGrpc;
@@ -11,13 +10,8 @@ public class CalculatorServiceImpl extends SumServiceGrpc.SumServiceImplBase {
     @Override
     public void summation(SumRequest request, StreamObserver<SumResponse> responseObserver) {
         //extracting value
-        Sum sum = request.getSum();
-        int num1 = sum.getFirstNum();
-        int num2 = sum.getLastNum();
-
-        int result = num1 + num2;
         SumResponse response = SumResponse.newBuilder()
-                .setResult(result)
+                .setResult(Integer.sum(request.getFirstNumber(),request.getLastNumber()))
                 .build();
         
         responseObserver.onNext(response);
