@@ -18,7 +18,7 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
     }
 
     @Override
-    public void primeManyTimes(PrimeManyTimesRequest request, StreamObserver<PrimeManyTimesResponse> responseObserver) {
+    public void primeManyTimes(PrimeNumberDecompositionRequest request, StreamObserver<PrimeNumberDecompositionResponse> responseObserver) {
 //        k = 2
 //        N = 210
 //        while N > 1:
@@ -31,7 +31,7 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
         int N = request.getNumber();
         while (N > 1) {
             if (N % k == 0) {
-                responseObserver.onNext(PrimeManyTimesResponse.newBuilder().setNumber(k).build());
+                responseObserver.onNext(PrimeNumberDecompositionResponse.newBuilder().setNumber(k).build());
                 N = N / k;
             } else {
                 k++;

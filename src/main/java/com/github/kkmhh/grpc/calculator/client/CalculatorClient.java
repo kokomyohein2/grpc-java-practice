@@ -25,7 +25,7 @@ public class CalculatorClient {
 //        System.out.printf("%d + %d = %d%n", sumRequest.getFirstNumber(), sumRequest.getLastNumber(), sumResponse.getResult());
         // Unary end
 
-        PrimeManyTimesRequest primeManyTimesRequest = PrimeManyTimesRequest.newBuilder()
+        PrimeNumberDecompositionRequest primeManyTimesRequest = PrimeNumberDecompositionRequest.newBuilder()
                 .setNumber(120)
                 .build();
 
