@@ -1,9 +1,6 @@
 package com.github.kkmhh.grpc.greeting.client;
 
-import com.proto.greet.GreetRequest;
-import com.proto.greet.GreetResponse;
-import com.proto.greet.GreetServiceGrpc;
-import com.proto.greet.Greeting;
+import com.proto.greet.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -17,22 +14,31 @@ public class GreetingClient {
                 .build();
 
         System.out.println("Creating stub");
-//        DummyServiceGrpc.DummyServiceBlockingStub syncClient = DummyServiceGrpc.newBlockingStub(channel);
 
         GreetServiceGrpc.GreetServiceBlockingStub greetClient = GreetServiceGrpc.newBlockingStub(channel);
 
-        Greeting greeting = Greeting.newBuilder()
-                .setFirstName("KoKo")
-                .setLastName("Unknown")
+        //Unary start
+//        Greeting greeting = Greeting.newBuilder()
+//                .setFirstName("KoKo")
+//                .setLastName("Unknown")
+//                .build();
+//
+//        GreetRequest greetRequest = GreetRequest.newBuilder()
+//                .setGreeting(greeting)
+//                .build();
+//
+//        GreetResponse greetResponse = greetClient.greet(greetRequest);
+//
+//        System.out.println("Response : " + greetResponse.getResult());
+        //Unary end
+
+        GreetManyTimesRequest greetManyTimesRequest = GreetManyTimesRequest.newBuilder()
+                .setGreeting(Greeting.newBuilder().setFirstName("KoKo").build())
                 .build();
 
-        GreetRequest greetRequest = GreetRequest.newBuilder()
-                .setGreeting(greeting)
-                .build();
+        greetClient.greetManyTimes(greetManyTimesRequest)
+                .forEachRemaining(greetManyTimesResponse -> System.out.println(greetManyTimesResponse.getResult()));
 
-        GreetResponse greetResponse = greetClient.greet(greetRequest);
-
-        System.out.println("Response : " + greetResponse.getResult());
 
         System.out.println("Shutting down channel");
         channel.shutdown();
